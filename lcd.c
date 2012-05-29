@@ -1,22 +1,30 @@
 /*
  * lcd.c
  * 
- * Driver for LCD module, based on standard Hitachi H44780, using a 
- * 10 pin connector for 4-bit only operation. Pinout of the connector
- * is as follows:
+ * Driver for EMGC16202-01 LCD module, with a Samsung KS0066U controller 
+ * (knockoff of Hitachi H44780), with a 14 pin connector for 8-bit signalling.
+ * 2 lines 16 characters, each character is 5x8 dots. No backlight.
+ *  http://www.lcd-module.de/eng/pdf/zubehoer/ks0066.pdf
+ *
+ * Pinout of the connector is as follows:
+ *  (from http://www.mtasia.co.jp/img/file/NO-22%20EMGC16202.pdf)
  *
  * Pin 	|  Func	| AVR
  *------+-------+---------
- *  1   |  GND 	| 
- *  2   |  Vcc  | 
- *  3   |  RS   | PF5
- *  4   |  R/!W | PF6
- *  5   |  E    | PF7
- *  6   |  D4	| PE4
- *  7   |  D5	| PE5
- *  8   |  D6	| PE6
- *  9   |  D7	| PE7
- * 10   | Light | PF4 (0=On, 1=Off)
+ *  1   | GND   | P
+ *  2   | 5V+   | P
+ *  3   | VDD   | P
+ *  4   | RS    | P
+ *  5   | R/W   | P
+ *  6   | E     | P
+ *  7   | D0    | P
+ *  8   | D1    | P
+ *  9   | D2    | P
+ * 10   | D3    | P
+ * 11   | D4    | P
+ * 12   | D5    | P
+ * 13   | D6    | P
+ * 14   | D7    | P
  *
  * The display is 16x2 chars, but is actually wired as a 40x2 line
  * display, where the left half is the first line, and the right half
@@ -27,6 +35,8 @@
  * The lcd_putc()/lcd_pos() functions keep this into account,
  * and perform the conversion
  *
+ * http://www.instructables.com/id/How-to-control-a-16x2-LCD-using-an-AVR-ATtiny2313/?ALLSTEPS
+ * http://en.wikipedia.org/wiki/HD44780_Character_LCD
  *
  * Copyright 2010 <freecutfirmware@gmail.com> 
  *
@@ -178,7 +188,7 @@ int lcd_putchar( char c, FILE *stream )
 void lcd_init( void )
 {
     PORTF &= ~(RW | E | RS);
-    DDRF |= (RW |  E | RS | BACKLIGHT);
+    DDRF |= (RW |  E | RS);
     DDRE |= DATA;;
     
     // 4-bit init sequence taken from Hitachi datasheet.
@@ -199,7 +209,6 @@ void lcd_init( void )
     lcd_write_control( 0x0c );// turn display on, cursor off
     lcd_write_control( 0x01 );// clear display, and go home
     current_pos = 0;	      // remember we're at home position
-    lcd_backlight_on( );
 } 
 
 /* 
