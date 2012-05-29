@@ -8,6 +8,8 @@
  * period is adjusted for tone.
  *
  *
+ * there is a FET on the XYRON, not sure what its switching..
+ *
  * Copyright 2010 <freecutfirmware@gmail.com> 
  *
  * This file is part of Freecut.
@@ -65,6 +67,7 @@ SIGNAL( SIG_OUTPUT_COMPARE2 )
 
 /*
  * Turn on beeper. Hz specifies frequency of the tone.
+ * Located at BP1 -> PB7
  */
 void beeper_on( int Hz )
 {
