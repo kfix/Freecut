@@ -6,6 +6,7 @@
  * The X and Y stepper motors are bipolar (4-wire) and are each attached to a ST E-L6219DS driver IC.
  *   http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00000092.pdf
  *   http://www.avrfreaks.net/index.php?name=PNphpBB2&file=printview&t=59216&start=0
+ *   http://mexlewiki.hs-heilbronn.de/index.php/Stepper_Motor_Controller_(SMC)
  * 
  * The YAXIS driver is controlled through PORT?, and the XAXIS driver controlled through PORT?.
  * 
