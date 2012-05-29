@@ -10,7 +10,7 @@
  * 
  * The YAXIS driver is controlled through PORT?, and the XAXIS driver controlled through PORT?.
  * 
- * Photointerrupter-type opto-sensors for the X and Y axis are ? when traveled through by the carriage.
+ * The carriage is homed by monitoring the photointerrupter-type opto-sensors at both ends of the X and Y axis
  * XHOME near -> P??
  * XHOME far -> P??
  * YHOME near -> P??
