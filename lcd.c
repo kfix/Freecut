@@ -18,7 +18,7 @@
  *  9   |  D7	| PE7
  * 10   | Light | PF4 (0=On, 1=Off)
  *
- * The display is 16x1 chars, but is actually wired as a 40x2 line
+ * The display is 16x2 chars, but is actually wired as a 40x2 line
  * display, where the left half is the first line, and the right half
  * is the second line. Addresses for the chars are as follows:
  *

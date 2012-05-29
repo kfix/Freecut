@@ -1,8 +1,8 @@
-# Freecut: open firmware for Cricut Personal devices.
+# Freecut-xyron: open firmware for Xyron Personal Cutting System devices.
 #
 # 
 # MCU name
-MCU = atmega128
+MCU = atmega64
 
 # Output format. (can be srec, ihex)
 FORMAT = ihex
@@ -14,7 +14,7 @@ TARGET = freecut
 FCLK = 16000000UL
 
 # List C source files here. (C dependencies are automatically generated.)
-SRC = main.c usb.c lcd.c keypad.c timer.c stepper.c cli.c flash.c dial.c
+SRC = main.c usb.c lcd.c keypad.c timer.c stepper.c cli.c flash.c
 
 # Assembler sources 
 ASRC = 
@@ -68,7 +68,7 @@ all: $(TARGET).elf $(TARGET).hex $(TARGET).lss tags
 .PHONY: prog 
 
 prog: all 
-	avrdude -pm128 -cstk500v2 -b115200 -P/dev/ttyUSB0 -u -V -U flash:w:$(TARGET).hex:i 
+	avrdude -pm64 -cstk500v2 -b115200 -P/dev/ttyUSB0 -u -V -U flash:w:$(TARGET).hex:i 
 
 # Create final output files (.hex) from ELF output file.
 %.hex: %.elf

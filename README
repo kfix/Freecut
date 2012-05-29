@@ -1,6 +1,6 @@
-Freecut v0.1
+Freecut v0.1-xyron
 
-Free firmware replacement for Cricut(tm) Personal paper cutter.
+Free firmware replacement for the Xyron(tm) Personal Cutting System.
 
 *******************************************************************************
 IMPORTANT: REPROGRAMMING THE AVR WILL PERMANENTLY ERASE YOUR ORIGINAL FIRMWARE 
@@ -22,19 +22,19 @@ will certainly void your warranty.
 Freecut cannot read your original cartridges and may never read them in
 the future.
 
-Cricut is a trademark of PROVO CRAFT. 
+Xyron is a trademark of XYRON, INC. 
 
-Freecut is not a PROVO CRAFT product. Freecut was developed completely 
-independently, without any documentation to PROVO CRAFT products, and without
+Freecut is not a XYRON product. Freecut was developed completely 
+independently, without any documentation to XYRON products, and without
 any original firmware. If you have problems with Freecut, do not consult
-PROVO CRAFT. 
+XYRON. 
 
 
 If you still want to proceed:
 
-Attach an AVR programming cable to cartridge connector on the main board (J5):
+Attach an AVR programming cable to the ISP connector header on the main board (J1):
 
- J5   |  AVR
+ J1   |  AVR
 ------+-----
   1   |  PDO
   3   |  SCK
@@ -42,10 +42,18 @@ Attach an AVR programming cable to cartridge connector on the main board (J5):
   5   |  RESET
   6   |  GND
 
-Top view of connector:
+Top view of ISP connector:
 
-       J5
-+----        ---+
+       J1
++---------+
+| 5  3  1 |
+| 6  4  2 |
++---------+
+
+Top view of JTAG connector:
+
+       J3
++---------------+
 | 9  7  5  3  1 |
 |10  8  6  4  2 |
 +---------------+
@@ -55,9 +63,14 @@ Top view of connector:
 And upload the freecut.hex file.
 
 After reprogramming, the machine should beep, and display "Freecut v0.1" on the LCD display.
-Use keypad to load/unload paper (bottom right is unload, one to the left is load)
 
-Use the USB cable to communicate (keypad is mostly non-functional, as well as the 3 dials on the front).
+To plot with Freecut on the Xyron, you need to install a serial port onto the board and connect it to your PC.
+Freecut does not use the Xyron pattern books.
+
+You can use a serial cable by by populating the serial port header (J16) with an RS232 female socket.
+You could also connect to the existing USB socket (J17) by populating the bridge chip header (U5) with an FTDIXXXX Serial-to-USB chip.
+
+The buttons on the screen and the pattern book tray are plumbed but are not mapped to any functions at the moment.
 
 USB uses 115200 baud, 8N1.
 
@@ -97,6 +110,5 @@ Don't send too many commands too quickly. Wait for '>' prompt before sending ano
 NOTE: This is the first quick & dirty version. User interface may experience
 sudden changes (like a more sensible speed/press syntax)
 
-e-mail: <freecutfirmware@gmail.com>
-
-
+e-mail for Freecut on Cricut: <freecutfirmware@gmail.com>
+e-mail for Freecut on Xyron: <joey@kidfixit.com>

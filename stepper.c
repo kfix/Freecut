@@ -1,26 +1,27 @@
 /*
  * stepper.c
  *
- * Driver for stepper motors. Each motor is a 6-wire unipolar model. Each of
- * the 4 coils (per motor) can be driven with a full current (through the big
- * transistor) or a reduced current (through a smaller transistor + 47 Ohm
- * resistor). The reduced current I call 'half current', but it may be less.
- * 
- * The Y motor (pen movement) is controlled through PORTC, and the X motor
- * (mat roller) is controlled through PORTA. Connections are identical.
- * 
- * In addition, the Z coordinate is controlled by two pins: PE2 is used
- * for up/down toggle, and PB6 selects the pressure with a PWM signal.
- * 
- * A small pushbutton is attached to PD1, which is active low when
- * pushed. This button detects when the gray cover on the pen holder is
- * moved all the way to the 'home' position.
- * 
- * Step resolution is about 400 steps/inch. For a 6x12 inch mat, that means
- * there's about 2400x4800 steps of usable space. Coordinate origin is the
- * blade starting point on the mat. A small amount of negative X is allowed
- * to roll the mat out of the machine.
+ * Control for the stepper motor drivers (X, Y), toolholder solenoid (Z), and photointerruptor opto-sensors (XHOME, YHOME).
  *
+ * The X and Y stepper motors are bipolar (4-wire) and are each attached to a ST E-L6219DS driver IC.
+ *   http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00000092.pdf
+ *   http://www.avrfreaks.net/index.php?name=PNphpBB2&file=printview&t=59216&start=0
+ * 
+ * The YAXIS driver is controlled through PORT?, and the XAXIS driver controlled through PORT?.
+ * 
+ * Photointerrupter-type opto-sensors for the X and Y axis are ? when traveled through by the carriage.
+ * XHOME near -> P??
+ * XHOME far -> P??
+ * YHOME near -> P??
+ * YHOME far -> P??
+ *
+ * Step resolution is about ? steps/inch. For the 4.5x4.5 inch cutting pad,
+ * that means there's about ?x? steps of usable space.
+ * Coordinate origin is the blade starting point on the mat, the rear-left corner.
+ *
+ * The Z coordinate is controlled by two pins (via 9, 10 @ J7): P? is used
+ * for up/down toggle, and P?? selects the pressure with a PWM signal.
+ * 
  *
  * Copyright 2010 <freecutfirmware@gmail.com> 
  *
