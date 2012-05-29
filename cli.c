@@ -18,6 +18,7 @@
  * You should have received a copy of the GNU General Public License
  * along with Freecut. If not, see http://www.gnu.org/licenses/.
  *
+ * should really replace this with G-code & grbl: http://dank.bengler.no/-/page/show/5470_grbl
  */
 
 #include <avr/wdt.h>
