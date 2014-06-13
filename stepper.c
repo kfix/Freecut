@@ -3,7 +3,7 @@
  *
  * Control for the stepper motor drivers (X, Y), toolholder solenoid (Z), and photointerruptor opto-sensors (XHOME, YHOME).
  *
- * The X and Y stepper motors are bipolar (4-wire) and are each attached to a ST E-L6219DS driver IC.
+ * The X and Y stepper motors are bipolar (4-wire) and are each attached to a ST L6219DS stepper driver IC (U2, U3).
  *   http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00000092.pdf
  *   http://www.avrfreaks.net/index.php?name=PNphpBB2&file=printview&t=59216&start=0
  *   http://mexlewiki.hs-heilbronn.de/index.php/Stepper_Motor_Controller_(SMC)
@@ -19,6 +19,7 @@
  * Step resolution is about ? steps/inch. For the 4.5x4.5 inch cutting pad,
  * that means there's about ?x? steps of usable space.
  * Coordinate origin is the blade starting point on the mat, the rear-left corner.
+ * http://cirictech.com/?p=51
  *
  * The Z coordinate is controlled by two pins (via 9, 10 @ J7): P? is used
  * for up/down toggle, and P?? selects the pressure with a PWM signal.
@@ -39,6 +40,14 @@
  * You should have received a copy of the GNU General Public License
  * along with Freecut. If not, see http://www.gnu.org/licenses/.
  *
+
+* U2 & U3: ST L6219DS Stepper Motor Driver
+*   Datasheet: http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00000092.pdf 
+* U4: NatSemi LP2985 Regulator
+*   Datasheet: https://www.national.com/ds/LP/LP2985.pdf
+* U7: TI HC138 3to8 De-Mux
+*   Datasheet: http://www.ti.com/lit/ds/symlink/sn74hc138.pdf
+
  */
 
 #include <avr/wdt.h>

@@ -29,43 +29,107 @@ independently, without any documentation to XYRON products, and without
 any original firmware. If you have problems with Freecut, do not consult
 XYRON. 
 
+To program a stock Xyron mainboard with the Freecut firmware, you will need an AVR ISP programmer and some semiconductors.
 
-If you still want to proceed:
+* Install the missing diodes (D1, D2, D3)
+* Install the missing resistors (R4, R5, R6)
+  * R29 for USBDM (-)
+  * R28 for USBDP (+)
+    * could be enough here to do bit-bang USB
+    http://www.obdev.at/products/vusb/index.html http://www.obdev.at/Images/vusb/circuit-zoomed.gif
 
-Attach an AVR programming cable to the ISP connector header on the main board (J1):
+* Install the missing ICs
+   U5: FTDI?? MAX??? PL???? SSOP-16
+     8 => J16 3 DB9/RS-232 TXD
+     9, 10 => VCC??
+     12 => J16 4 DB9/RS-232 DTR 
+	no plumbing to RX Rs232 on the DB9...so can't add a plug here for sending plotting instructions. the db9 plug is just for collecting debug data
+   U6: SOIC-8 
+     ATTiny13??
+     AT24CXXX 8S1 EEPROM? Could be for storing the "internal" design book.
+      1 => J18:4 pattern tray conn
+      2 => AVR:11/PB1(SCK)
+      3 => AVR:43/PG2(ALE)
+      4 => AVR:20 (RESET) - why would a memory chip have a reset?
+      5 => J18:6 pattern tray conn
+      7 => GND?VCC
+      8 => J18:5 pattern tray conn
+   U8: SOIC-14 NARROW ??
+   U9: TSSOP
+     AT24CXXX 8A2 EEPROM ?? http://www.atmel.com/Images/doc0180.pdf
+      4 => VCC??
 
- J1   |  AVR
-------+-----
-  1   |  PDO
-  3   |  SCK
-  4   |  PDI
-  5   |  RESET
-  6   |  GND
+* Pattern book chip: atmel AT25DF321
+  http://www.robotroom.com/Weather-Station-2.html
 
-Top view of ISP connector:
+* serial debug the stock firmware
+  connect PL2303 raw TXD & RXD to AVR RXD0 & TXD0 (use the ISP header)
+  sudo cu --nostop --line /dev/cu.PL2303-00003004 --speed 19200 dir
+
+* to soft reset the Xyron, press and release the two buttons on the LCD simultaneously.
+   the firmware version number should show on the screen and over the UART pins on startup
+
+* Attach an AVR programming cable to the ISP connector header on @ J1.
+
+  ISP connector pinout:
+
+     J1   |  AVR
+    ------+-----
+      1   |  3: PE1 (TXD0/PDO) *DIRECT* (J17 USB - 2)
+      2  (VCC)
+      3   |  11: PB1 (SCK) (J17 USB 3)
+      4   |  2: PE0 (RXD0/PDI) (J17 USB - 3, 4)
+      5   |  20: RESET
+      6  (GND)
+
+  Top view of ISP connector:
 
        J1
-+---------+
-| 5  3  1 |
-| 6  4  2 |
-+---------+
+    +------+
+    | 1  2 |
+    | 3  4 |
+    | 5  6 |
+    +------+
 
-Top view of JTAG connector:
+* (Optional) Attach an AVR debugging cable to the JTAG connector header @ J3.
+
+  JTAG connector pinout:
+
+     J3   |  AVR
+    ------+-----
+      1   |  57: PF4 (TCK)
+      2  (GND)
+      3   |  55: PF6 (TDO)
+      4   |  VTref
+      5   |  56: PF5 (TMS)
+      6   |  20: RESET
+      7 
+      8     
+      9   |  54: PF7 (TDI)
+      10 (GND) 
+
+  Top view of JTAG connector:
 
        J3
-+---------------+
-| 9  7  5  3  1 |
-|10  8  6  4  2 |
-+---------------+
+    +------+
+    | 1  2 |
+    | 3  4 |
+    | 5  6 |
+    | 7  8 |
+    | 9 10 |
+    +------+
 
-===edge of board======
+For more information on connecting AVR programmers, refer to:
+  * Connecting to a target board with the AVR JTAGICE mkII => http://www.atmel.com/Images/doc2562.pdf
+  * Atmel AVR042: AVR Hardware Design Considerations => http://www.atmel.com/images/doc2521.pdf
 
-And upload the freecut.hex file.
+
+* Use avarice or AVR Studio to upload the freecut.hex file.
 
 After reprogramming, the machine should beep, and display "Freecut v0.1" on the LCD display.
 
 To plot with Freecut on the Xyron, you need to install a serial port onto the board and connect it to your PC.
-Freecut does not use the Xyron pattern books.
+Freecut does not read or use the Xyron pattern books.
 
 You can use a serial cable by by populating the serial port header (J16) with an RS232 female socket.
 You could also connect to the existing USB socket (J17) by populating the bridge chip header (U5) with an FTDIXXXX Serial-to-USB chip.
@@ -110,5 +174,3 @@ Don't send too many commands too quickly. Wait for '>' prompt before sending ano
 NOTE: This is the first quick & dirty version. User interface may experience
 sudden changes (like a more sensible speed/press syntax)
 
-e-mail for Freecut on Cricut: <freecutfirmware@gmail.com>
-e-mail for Freecut on Xyron: <joey@kidfixit.com>

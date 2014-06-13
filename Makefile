@@ -3,6 +3,9 @@
 # 
 # MCU name
 MCU = atmega64
+# U1: Atmel ATMEGA64 MCU
+#   * Datasheet: http://www.atmel.com/Images/doc2490.pdf
+
 
 # Output format. (can be srec, ihex)
 FORMAT = ihex
