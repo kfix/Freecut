@@ -73,15 +73,18 @@ To program a stock Xyron mainboard with the Freecut firmware, you will need an A
 
   ISP connector pinout:
 
-     J1   |  AVR
+     J1   |  U1: Atmega64
     ------+-----
-      1   |  3: PE1 (TXD0/PDO) *DIRECT* (J17 USB - 2)
+      1   |  3: PE1 (TXD0/PDO/MISO*) {J17 USB D- pn2}
       2  (VCC)
-      3   |  11: PB1 (SCK) (J17 USB 3)
-      4   |  2: PE0 (RXD0/PDI) (J17 USB - 3, 4)
+      3   |  11: PB1 (SCK) {J17 USB 3}
+      4   |  2: PE0 (RXD0/PDI/MOSI*) {J17 USB D+ pn3}
       5   |  20: RESET
       6  (GND)
 
+  *pins work as described per most ISP programmers' documentation.  
+    Atmega64 & 128's uniquely do not multiplex ISP (RX/TX) and SPI (MOSI/MISO) on the same pins.  
+    
   Top view of ISP connector:
 
        J1
@@ -95,7 +98,7 @@ To program a stock Xyron mainboard with the Freecut firmware, you will need an A
 
   JTAG connector pinout:
 
-     J3   |  AVR
+     J3   |  U1: Atmega64
     ------+-----
       1   |  57: PF4 (TCK)
       2  (GND)
